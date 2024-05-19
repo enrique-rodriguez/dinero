@@ -1,12 +1,7 @@
 from django import urls
 
-from django.shortcuts import render
-
-
-def view(request):
-    return render(request, 'app/home.html')
-
+from app import endpoints
 
 urlpatterns = [
-    urls.path('', view, name='view'),
+    urls.path('', endpoints.home, name='home'),
 ]
