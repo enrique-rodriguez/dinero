@@ -1,0 +1,104 @@
+{% load static %}
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{% url 'home' %}" class="brand-link">
+      <img src="{% static 'app/dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Dinero</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{% static 'app/dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="{% url 'coming_soon' %}" class="d-block">Alexander Pierce</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+          <li class="nav-item">
+            <a href="{% url 'coming_soon' %}" class="nav-link">
+              <i class="nav-icon fa fa-solid fa-money-bill"></i>
+              <p>
+                Budget
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'coming_soon' %}" class="nav-link">
+              <i class="nav-icon fa fa-solid fa-chart-bar"></i>
+              <p>
+                Reports
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'coming_soon' %}" class="nav-link">
+              <i class="nav-icon fa fa-building"></i>
+              <p>
+                All Accounts
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'coming_soon' %}" class="nav-link">
+              <i class="nav-icon fas fa-angle-left right"></i>
+              <p>
+                Budget
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'coming_soon' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Account 1</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'coming_soon' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Account 2</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'coming_soon' %}" class="nav-link">
+              <i class="nav-icon fas fa-angle-left right"></i>
+              <p>
+                Tracking
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'coming_soon' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Account 1</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'coming_soon' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Account 2</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <button type="button" data-toggle="modal" data-target="#modal-default" class="btn btn-block btn-default"><i class="fa fa-plus"></i> Add Account</button>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+
+{% include 'app/layout/sidebar/add_account_modal.html' %}

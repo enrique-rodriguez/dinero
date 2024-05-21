@@ -6,3 +6,5 @@ from shared.core.application import messages
 class AddAccountCommand(messages.Command):
     id: str
     name: str
+    _type: str
+    balance: str

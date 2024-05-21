@@ -9,6 +9,7 @@ django = "*"
 [scripts]
 dev="python manage.py runserver"
 test="python manage.py test"
+clean="bash scripts/clean.sh"
 
 [dev-packages]
 

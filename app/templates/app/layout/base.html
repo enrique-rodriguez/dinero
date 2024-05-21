@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard 2</title>
+  <title>AdminLTE 3 | Dinero</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -14,18 +14,21 @@
   <link rel="stylesheet" href="{% static 'app/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'app/dist/css/adminlte.min.css' %}">
+
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="{% static 'app/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}">
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
 
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
+  <!-- <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__wobble" src="{% static 'app/dist/img/AdminLTELogo.png' %}" alt="AdminLTELogo" height="60" width="60">
-  </div>
+  </div> -->
 
   {% include 'app/layout/navbar.html' %}
 
-  {% include 'app/layout/sidebar.html' %}
+  {% include 'app/layout/sidebar/index.html' %}
 
   {% block content %}{% endblock content %}
 
@@ -36,6 +39,12 @@
   <!-- /.control-sidebar -->
 
   {% include 'app/layout/footer.html' %}
+</div>
+
+<div hidden>
+  {% for msg in messages %}
+  <p class="message" data-mtag="{{ msg.tags }}">{{ msg }}</p>
+  {% endfor %}
 </div>
 <!-- ./wrapper -->
 
@@ -59,8 +68,37 @@
 <script src="{% static 'app/plugins/chart.js/Chart.min.js' %}"></script>
 
 <!-- AdminLTE for demo purposes -->
-<script src="{% static 'app/dist/js/demo.js' %}"></script>
+<!-- <script src="{% static 'app/dist/js/demo.js' %}"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{% static 'app/dist/js/pages/dashboard2.js' %}"></script>
+<!-- SweetAlert2 -->
+<script src="{% static 'app/plugins/sweetalert2/sweetalert2.min.js' %}"></script>
+<!-- HTMX -->
+<script src="{% static 'app/plugins/htmx/htmx.org@1.9.12.min.js' %}"></script>
+
+<script>
+  
+  $(function(){
+    var Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+
+    
+    window.addEventListener('load', function(event) {
+        document.querySelectorAll(".message").forEach(function(e){
+        
+        Toast.fire({
+          icon: e.dataset.mtag,
+          title: e.innerHTML
+        });
+      })
+    })
+
+  });
+</script>
+
 </body>
 </html>

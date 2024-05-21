@@ -11,4 +11,3 @@ class AccountModule(module.Module):
         self.account_repository = account_repository
 
         self.register_command(commands.AddAccountCommand, handlers.AddAccountHandler(account_repository))
-    

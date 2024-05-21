@@ -14,8 +14,10 @@ class AddAccountTestCase(unittest.TestCase):
     def add_account(self, **kwargs):
         account_id = kwargs.get("account_id", str(uuid.uuid4()))
         account_name = kwargs.get("account_name", "My Account")
+        account_type = kwargs.get("account_type", "Savings")
+        account_balance = kwargs.get("account_balance", "100.00")
 
-        cmd = commands.AddAccountCommand(account_id, account_name)
+        cmd = commands.AddAccountCommand(account_id, account_name, account_type, account_balance)
 
         return self.module.execute(cmd)
     
@@ -31,17 +33,7 @@ class AddAccountTestCase(unittest.TestCase):
         self.assertTrue(result.is_error)
         self.assertEqual(result.code, "account-exists")
         self.assertEqual(self.module.account_repository.count(), 1)
-    
-    def test_account_name_exists_gives_error(self):
-        account_name = "My Account"
-
-        result = self.add_account(account_name=account_name)
-        result = self.add_account(account_name=account_name)
-
-        self.assertTrue(result.is_error)
-        self.assertEqual(result.code, "account-exists")
-        self.assertEqual(self.module.account_repository.count(), 1)
-    
+        
     def test_adds_the_account(self):
         result = self.add_account()
 
@@ -57,6 +49,20 @@ class AddAccountTestCase(unittest.TestCase):
 
     def test_raises_error_if_account_id_is_empty(self):
         result = self.add_account(account_id="")
+
+        self.assertTrue(result.is_error)
+        self.assertEqual(result.code, "account-creation-error")
+        self.assertEqual(self.module.account_repository.count(), 0)
+    
+    def test_raises_error_if_type_is_empty(self):
+        result = self.add_account(account_type="")
+
+        self.assertTrue(result.is_error)
+        self.assertEqual(result.code, "account-creation-error")
+        self.assertEqual(self.module.account_repository.count(), 0)
+
+    def test_raises_error_if_balance_is_empty(self):
+        result = self.add_account(account_balance="")
 
         self.assertTrue(result.is_error)
         self.assertEqual(result.code, "account-creation-error")

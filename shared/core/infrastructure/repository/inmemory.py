@@ -7,7 +7,9 @@ class InMemoryRepository(repository.Repository):
         self.entities = dict()
 
     def get(self, id):
-        return self.entities.get(id)
+        entity = self.entities.get(id)
+
+        return [] if not entity else entity.domain_events
 
     def save(self, id, entity):
         self.entities[id] = entity

@@ -1,6 +1,8 @@
-from accounts import models
 from django.contrib import admin
+
+from accounts import models
 
 # Register your models here.
 
-admin.site.register(models.AccountModel)
+admin.site.register(models.AccountEventModel)
+admin.site.register(models.AccountProjectionModel)

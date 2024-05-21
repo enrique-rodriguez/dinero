@@ -13,6 +13,44 @@ class AccountId(values.ValueObject):
         if len(self.id) == 0:
             raise ValueError("Account ID Empty")
 
+    def get(self):
+        return self.id
+
+
+@dataclass(frozen=True)
+class AccountBalance(values.ValueObject):
+    balance: str
+
+    def __post_init__(self):
+        if len(self.balance) == 0:
+            raise ValueError("Account Balance Empty")
+    
+    def get(self):
+        return self.clean_balance()
+            
+    def clean_balance(self):
+        new_balance = ""
+
+        try:
+            new_balance = float(new_balance.strip())
+
+        except:
+            new_balance = float('0')
+        
+        return int(new_balance * 100)
+        
+
+@dataclass(frozen=True)
+class AccountType(values.ValueObject):
+    type: str
+
+    def __post_init__(self):
+        if len(self.type) == 0:
+            raise ValueError("Account Type Empty")
+    
+    def get(self):
+        return self.type
+        
 
 @dataclass(frozen=True)
 class AccountName(values.ValueObject):
@@ -22,14 +60,9 @@ class AccountName(values.ValueObject):
         if len(self.name) == 0:
             raise ValueError("Account Name Empty")
     
-    def equals(self, other):
-        return self == other
-    
-    def __eq__(self, other):
-        if isinstance(other, str):
-            other = AccountName(other)
-        
-        return other.name == self.name
+    def get(self):
+        return self.name
+
 
 
 class Account(entities.Entity):
@@ -43,11 +76,12 @@ class Account(entities.Entity):
     
     def apply(self, event):
         if isinstance(event, events.AccountAddedEvent):
-            self.apply_account_added_event(event)
+            return self.apply_account_added_event(event)
         
-        else:
-            raise ValueError(f"Unknown event '{event.__class__.__name__}'")
-    
+        raise ValueError(f"Unknown event '{event.__class__.__name__}'")
+
     def apply_account_added_event(self, event: events.AccountAddedEvent):
-        self.id = AccountId(event.id)
+        self.id = AccountId(event.account_id)
         self.name = AccountName(event.name)
+        self.type = AccountType(event._type)
+        self.balance = AccountBalance(event.balance)
