@@ -29,3 +29,5 @@ jobs:
     - name: Run Tests
       run: |
         pipenv run python manage.py test
+      env:
+          SECRET_KEY: django-insecure-%bmr%-#z!%3=7=#b-!hw!+lr+karf&j868o&osqvb^#i3)z(vt
