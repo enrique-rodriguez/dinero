@@ -1,0 +1,63 @@
+version: "3.2"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/web.Dockerfile
+    container_name: web
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    networks:
+      - rabbitmq_go_net
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - rabbitmq_go_net
+  
+  worker:
+    build:
+      context: .
+      dockerfile: docker/worker.Dockerfile
+    container_name: worker
+    volumes:
+      - .:/app
+    ports:
+      - 9001:9001
+    env_file:
+      - .env
+    networks:
+      - rabbitmq_go_net
+    depends_on:
+      - producer
+      - rabbitmq
+  
+  producer:
+    build:
+      context: .
+      dockerfile: docker/producer.Dockerfile
+    container_name: producer
+    env_file:
+      - .env
+    networks:
+      - rabbitmq_go_net
+    depends_on:
+      - web
+      - rabbitmq
+
+networks:
+  rabbitmq_go_net:
+    driver: bridge
