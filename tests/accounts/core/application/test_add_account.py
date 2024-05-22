@@ -9,7 +9,7 @@ from tests.accounts.core import module
 class AddAccountTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.module = module.create_module()
+        self.module = module.get_module()
     
     def add_account(self, **kwargs):
         account_id = kwargs.get("account_id", str(uuid.uuid4()))
@@ -67,3 +67,8 @@ class AddAccountTestCase(unittest.TestCase):
         self.assertTrue(result.is_error)
         self.assertEqual(result.code, "account-creation-error")
         self.assertEqual(self.module.account_repository.count(), 0)
+    
+    def test_account_added_to_read_model(self):
+        self.add_account()
+
+        self.assertEqual(self.module.account_read_model.count(), 1)

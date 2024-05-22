@@ -1,4 +1,4 @@
-from accounts.core.domain import events
+from accounts.core import factories
 from accounts.core.domain import repository
 
 
@@ -23,19 +23,13 @@ class DjangoAccountRepository(repository.AccountRepository):
         evts = []
 
         for e in models.AccountEventModel.objects.filter(account_id=account_id):
-            data = e.data
-            event_id = e.event_id
+            obj = e.data.copy()
+            obj['event_id'] = e.event_id
+            obj['created_at'] = e.created_at
 
-            if e.event == events.AccountAddedEvent.__name__:
+            domain_event = factories.EventFactory.create(e.event_name, obj)
             
-                domain_event = events.AccountAddedEvent.create(
-                    id=event_id,
-                    account_id=account_id, 
-                    created_at=e.created_at,
-                    data=data
-                )
-            
-            else:
+            if not domain_event:
                 raise ValueError(f"Unhandled event '{e.event}'")
             
             evts.append(domain_event)

@@ -23,7 +23,7 @@ class AddAccountApiEndpointTestCase(TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.headers.get("HX-Redirect"), urls.reverse("home"))
     
-    # def test_successful_account_already_exists_gives_400(self):
+    # def test_account_with_name_already_exists_gives_400(self):
     #     response = self.add_account()
         
     #     self.assertEqual(response.status_code, 400)

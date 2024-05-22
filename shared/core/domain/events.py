@@ -11,3 +11,11 @@ class DomainEvent(abc.ABC):
     @abc.abstractmethod
     def get_data(self):
         pass
+
+    def to_dict(self):
+        return {
+            'event_id': self.id,
+            'created_at': self.created_at,
+            'event_name': self.__class__.__name__,
+            'data': self.get_data()
+        }

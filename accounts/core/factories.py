@@ -9,3 +9,11 @@ class AccountFactory:
         acct = account.Account()
         acct.add_event(events.AccountAddedEvent(id, name, type, balance))
         return acct
+    
+
+class EventFactory:
+
+    @classmethod
+    def create(cls, event_name, obj):
+        if event_name == events.AccountAddedEvent.__name__:
+            return events.AccountAddedEvent.from_dict(obj)

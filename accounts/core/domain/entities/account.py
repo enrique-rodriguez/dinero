@@ -22,22 +22,22 @@ class AccountBalance(values.ValueObject):
     balance: str
 
     def __post_init__(self):
-        if len(self.balance) == 0:
+        if len(str(self.balance)) == 0:
             raise ValueError("Account Balance Empty")
     
     def get(self):
-        return self.clean_balance()
+        return self.balance
             
-    def clean_balance(self):
-        new_balance = ""
+    def clean(self):
+        new_balance = None
 
         try:
-            new_balance = float(new_balance.strip())
+            new_balance = float(self.balance.strip())
 
         except:
             new_balance = float('0')
         
-        return int(new_balance * 100)
+        return AccountBalance(int(new_balance * 100))
         
 
 @dataclass(frozen=True)
@@ -84,4 +84,4 @@ class Account(entities.Entity):
         self.id = AccountId(event.account_id)
         self.name = AccountName(event.name)
         self.type = AccountType(event._type)
-        self.balance = AccountBalance(event.balance)
+        self.balance = AccountBalance(event.balance).clean()
