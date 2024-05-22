@@ -11,7 +11,7 @@ class AddAccountApiEndpointTestCase(TestCase):
 
         data = {
             'account_name': kwargs.get('account_name', 'My Account'),
-            'account_type': kwargs.get('account_type', 'Savings'),
+            'account_type': kwargs.get('account_type', 'checking'),
             'account_balance': kwargs.get('account_balance', '100.00'),
         }
 
@@ -50,5 +50,5 @@ class AddAccountApiEndpointTestCase(TestCase):
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.content, b'Could not create account: Account Balance Empty')
-    
+
     

@@ -19,6 +19,7 @@ class AccountEventModel(models.Model):
 class AccountProjectionModel(models.Model):
     uuid = models.UUIDField(verbose_name="UUID", unique=True)
     name = models.CharField(max_length=100, verbose_name="Account Name")
+    category = models.CharField(max_length=100, verbose_name="Account Category")
     type = models.CharField(max_length=100, verbose_name="Account Type")
     balance = models.IntegerField(verbose_name="Account Balance")
 

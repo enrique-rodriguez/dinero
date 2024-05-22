@@ -16,6 +16,7 @@ class DjangoAccountReadModelStore(readmodel.ReadModelStore):
         return AccountReadModel(
             str(projection.uuid),
             projection.name,
+            projection.category,
             projection.type,
             projection.balance,
         )
@@ -30,6 +31,7 @@ class DjangoAccountReadModelStore(readmodel.ReadModelStore):
         
         projection.uuid = model.account_id
         projection.name = model.name
+        projection.category = model.category
         projection.type = model.type
         projection.balance = model.balance
 

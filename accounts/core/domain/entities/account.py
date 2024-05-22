@@ -65,6 +65,28 @@ class AccountName(values.ValueObject):
 
 
 
+@dataclass(frozen=True)
+class AccountCategory(values.ValueObject):
+    category: str
+
+    def __post_init__(self):
+        if len(self.category) == 0:
+            raise ValueError("Account Category Empty")
+    
+    def get(self):
+        return self.category
+
+    @classmethod
+    def from_type(self, _type):
+        if _type in ["checking", "savings", "cash"]:
+            return AccountCategory("budget")
+
+        elif _type in ["asset", "liability"]:
+            return AccountCategory("tracking")
+        
+        raise ValueError(f"Unknown category mapping to assign for account type '{_type}'")
+    
+
 class Account(entities.Entity):
 
     def __init__(self, events=None):
@@ -83,5 +105,6 @@ class Account(entities.Entity):
     def apply_account_added_event(self, event: events.AccountAddedEvent):
         self.id = AccountId(event.account_id)
         self.name = AccountName(event.name)
+        self.category = AccountCategory.from_type(event._type)
         self.type = AccountType(event._type)
         self.balance = AccountBalance(event.balance).clean()

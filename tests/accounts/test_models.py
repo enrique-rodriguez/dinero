@@ -14,12 +14,15 @@ class TestAccountProjectModel(TestCase):
 
         self.assertEqual(models.AccountProjectionModel._meta.get_field('uuid').verbose_name, 'UUID')
         self.assertEqual(models.AccountProjectionModel._meta.get_field('name').verbose_name, 'Account Name')
+        self.assertEqual(models.AccountProjectionModel._meta.get_field('category').verbose_name, 'Account Category')
         self.assertEqual(models.AccountProjectionModel._meta.get_field('type').verbose_name, 'Account Type')
         self.assertEqual(models.AccountProjectionModel._meta.get_field('balance').verbose_name, 'Account Balance')
     
     def test_field_names(self):
         self.assertEqual(models.AccountProjectionModel._meta.get_field('uuid').name, 'uuid')
         self.assertEqual(models.AccountProjectionModel._meta.get_field('name').name, 'name')
+        self.assertEqual(models.AccountProjectionModel._meta.get_field('type').name, 'type')
+        self.assertEqual(models.AccountProjectionModel._meta.get_field('category').name, 'category')
         self.assertEqual(models.AccountProjectionModel._meta.get_field('balance').name, 'balance')
     
     def test_uuid_is_unique(self):

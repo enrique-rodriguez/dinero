@@ -16,12 +16,14 @@ class DjangoAccountReadModelTestCase(TestCase):
     def test_saves_model(self):
         account_id = str(uuid.uuid4())
         name = 'name'
+        category = 'category'
         type = 'type'
         balance = 200
         
         model = models.AccountReadModel(
             account_id,
             name,
+            category,
             type,
             balance
         )
@@ -38,12 +40,14 @@ class DjangoAccountReadModelTestCase(TestCase):
     def test_updates_model(self):
         account_id = str(uuid.uuid4())
         name = 'name'
+        category = 'category'
         type = 'type'
         balance = 200
         
         model = models.AccountReadModel(
             account_id,
             name,
+            category,
             type,
             balance
         )
@@ -61,12 +65,14 @@ class DjangoAccountReadModelTestCase(TestCase):
     def test_only_updates_if_save_is_called(self):
         account_id = str(uuid.uuid4())
         name = 'name'
+        category = 'category'
         type = 'type'
         balance = 200
         
         model = models.AccountReadModel(
             account_id,
             name,
+            category,
             type,
             balance
         )

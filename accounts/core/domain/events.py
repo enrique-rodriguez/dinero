@@ -2,10 +2,11 @@ from shared.core.domain import events
 
 
 class AccountUpdatedEvent(events.DomainEvent):
-    def __init__(self, account_id, name, type, balance, *args, **kwargs):
+    def __init__(self, account_id, name, category, type, balance, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.account_id = account_id
         self.name = name
+        self.category = category
         self.type = type
         self.balance = balance
     
@@ -13,6 +14,7 @@ class AccountUpdatedEvent(events.DomainEvent):
         return {
             'account_id': self.account_id,
             'name': self.name,
+            'category': self.category,
             'type': self.type,
             'balance': self.balance,
         }

@@ -14,7 +14,7 @@ class AddAccountTestCase(unittest.TestCase):
     def add_account(self, **kwargs):
         account_id = kwargs.get("account_id", str(uuid.uuid4()))
         account_name = kwargs.get("account_name", "My Account")
-        account_type = kwargs.get("account_type", "Savings")
+        account_type = kwargs.get("account_type", "checking")
         account_balance = kwargs.get("account_balance", "100.00")
 
         cmd = commands.AddAccountCommand(account_id, account_name, account_type, account_balance)

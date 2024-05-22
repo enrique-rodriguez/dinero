@@ -31,6 +31,7 @@ class AddAccountHandler(handlers.CommandHandler):
             evts.extend([events.AccountUpdatedEvent(
                 account.id.get(),
                 account.name.get(),
+                account.category.get(),
                 account.type.get(),
                 account.balance.get(),
             )])
@@ -55,6 +56,7 @@ class AccountUpdatedHandler(handlers.EventHandler):
             model = models.AccountReadModel(account_id=event.account_id)
         
         model.name = event.name
+        model.category = event.category
         model.type = event.type
         model.balance = event.balance
         
