@@ -2,11 +2,14 @@ import uuid
 
 from django.db.utils import IntegrityError
 from django.test import TestCase
-
+from django.contrib import admin
 from accounts import models
 
 
 class TestAccountProjectModel(TestCase):
+
+    def test_registered_in_admin_site(self):
+        self.assertTrue(admin.site.is_registered(models.AccountProjectionModel))
 
     def test_verbose_names(self):
         self.assertEqual(models.AccountProjectionModel._meta.verbose_name, 'Account Projection')
@@ -35,7 +38,41 @@ class TestAccountProjectModel(TestCase):
 
 
 
+class TestTransactionProjectModel(TestCase):
+
+    def test_registered_in_admin_site(self):
+        self.assertTrue(admin.site.is_registered(models.TransactionProjectionModel))
+
+    def test_verbose_names(self):
+        self.assertEqual(models.TransactionProjectionModel._meta.verbose_name, 'Transaction Projection')
+        self.assertEqual(models.TransactionProjectionModel._meta.verbose_name_plural, 'Transaction Projections')
+
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('uuid').verbose_name, 'UUID')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('date').verbose_name, 'Date')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('payee_id').verbose_name, 'Payee ID')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('category_id').verbose_name, 'Category ID')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('memo').verbose_name, 'Memo')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('outflow').verbose_name, 'Outflow')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('inflow').verbose_name, 'Inflow')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('cleared').verbose_name, 'Cleared')
+    
+    def test_field_names(self):
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('uuid').name, 'uuid')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('date').name, 'date')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('payee_id').name, 'payee_id')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('category_id').name, 'category_id')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('memo').name, 'memo')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('outflow').name, 'outflow')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('inflow').name, 'inflow')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('cleared').name, 'cleared')
+    
+
+
+
 class TestAccountEventModel(TestCase):
+
+    def test_registered_in_admin_site(self):
+        self.assertTrue(admin.site.is_registered(models.AccountEventModel))
 
     def test_verbose_names(self):
         self.assertEqual(models.AccountEventModel._meta.verbose_name, 'Account Event')

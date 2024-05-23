@@ -6,3 +6,4 @@ from accounts import models
 
 admin.site.register(models.AccountEventModel)
 admin.site.register(models.AccountProjectionModel)
+admin.site.register(models.TransactionProjectionModel)

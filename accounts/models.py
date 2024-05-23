@@ -23,3 +23,18 @@ class AccountProjectionModel(models.Model):
     class Meta:
         verbose_name = "Account Projection"
         verbose_name_plural = "Account Projections"
+
+
+class TransactionProjectionModel(models.Model):
+    uuid = models.UUIDField(verbose_name="UUID", unique=True)
+    date = models.DateField(verbose_name="Date")
+    payee_id = models.CharField(max_length=100, verbose_name="Payee ID")
+    category_id = models.CharField(max_length=100, verbose_name="Category ID")
+    memo = models.TextField(max_length=100, verbose_name="Memo")
+    outflow = models.IntegerField(verbose_name="Outflow")
+    inflow = models.IntegerField(verbose_name="Inflow")
+    cleared = models.BooleanField(verbose_name="Cleared")
+
+    class Meta:
+        verbose_name = "Transaction Projection"
+        verbose_name_plural = "Transaction Projections"
