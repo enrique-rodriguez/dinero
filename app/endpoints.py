@@ -7,3 +7,7 @@ def home(request):
 
 def coming_soon(request):
     return render(request, 'app/coming_soon.html')
+
+
+def accounts(request):
+    return render(request, 'app/accounts/index.html')
