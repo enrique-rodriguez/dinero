@@ -1,0 +1,14 @@
+{% for acct in accounts %}
+<li class="nav-item">
+    <a href="{% url 'coming_soon' %}" class="nav-link">        
+        <div class="row">
+            <div class="col">
+                <p style="font-size: small;">{{ acct.name }}</p>
+            </div>
+            <div class="col">
+                <p style="font-size: small;" class="{% if acct.debt %}text-red{% endif %}"><b>{{ acct.balance }}</b></p>
+            </div>
+        </div>
+    </a>
+</li>
+{% endfor %}

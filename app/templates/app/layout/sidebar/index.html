@@ -52,45 +52,39 @@
           <li class="nav-item">
             <a href="{% url 'coming_soon' %}" class="nav-link">
               <i class="nav-icon fas fa-angle-left right"></i>
-              <p>
-                Budget
-              </p>
+              <div class="row">
+                <p class="col-4">
+                  Budget
+                </p>
+                <p class="col" style="font-size: small;"><b 
+                   hx-trigger="load" 
+                   hx-get="{% url 'api:get-balance' %}?cat=budget" 
+                   hx-swap="innerHTML"></b></p>
+              </div>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'coming_soon' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Account 1</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'coming_soon' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Account 2</p>
-                </a>
-              </li>
+            <ul class="nav nav-treeview" 
+                hx-swap="innerHTML" 
+                hx-trigger="load" 
+                hx-get="{% url 'api:get-accounts' %}?cat=budget"> 
             </ul>
           </li>
           <li class="nav-item">
             <a href="{% url 'coming_soon' %}" class="nav-link">
               <i class="nav-icon fas fa-angle-left right"></i>
-              <p>
-                Tracking
-              </p>
+              <div class="row">
+                <p class="col-4">
+                  Tracking
+                </p>
+                <p class="col" style="font-size: small;"><b 
+                   hx-trigger="load" 
+                   hx-get="{% url 'api:get-balance' %}?cat=tracking" 
+                   hx-swap="innerHTML"></b></p>
+              </div>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'coming_soon' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Account 1</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'coming_soon' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Account 2</p>
-                </a>
-              </li>
+            <ul class="nav nav-treeview" 
+                hx-swap="innerHTML" 
+                hx-trigger="load" 
+                hx-get="{% url 'api:get-accounts' %}?cat=tracking">
             </ul>
           </li>
         </ul>

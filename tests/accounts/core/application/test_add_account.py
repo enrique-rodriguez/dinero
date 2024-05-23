@@ -1,8 +1,7 @@
-import uuid
 import unittest
+import uuid
 
 from accounts.core.application import commands
-
 from tests.accounts.core import module
 
 
@@ -54,7 +53,7 @@ class AddAccountTestCase(unittest.TestCase):
         self.assertEqual(result.code, "account-creation-error")
         self.assertEqual(self.module.account_repository.count(), 0)
     
-    def test_raises_error_if_type_is_empty(self):
+    def test_raises_error_iftype_is_empty(self):
         result = self.add_account(account_type="")
 
         self.assertTrue(result.is_error)

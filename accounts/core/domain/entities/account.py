@@ -1,8 +1,7 @@
 from dataclasses import dataclass
 
 from accounts.core.domain import events
-from shared.core.domain import entities
-from shared.core.domain import values
+from shared.core.domain import entities, values
 
 
 @dataclass(frozen=True)
@@ -41,7 +40,7 @@ class AccountBalance(values.ValueObject):
         
 
 @dataclass(frozen=True)
-class AccountType(values.ValueObject):
+class account_type(values.ValueObject):
     type: str
 
     def __post_init__(self):
@@ -77,14 +76,14 @@ class AccountCategory(values.ValueObject):
         return self.category
 
     @classmethod
-    def from_type(self, _type):
-        if _type in ["checking", "savings", "cash"]:
+    def fromtype(self, type):
+        if type in ["checking", "savings", "cash"]:
             return AccountCategory("budget")
 
-        elif _type in ["asset", "liability"]:
+        elif type in ["asset", "liability"]:
             return AccountCategory("tracking")
         
-        raise ValueError(f"Unknown category mapping to assign for account type '{_type}'")
+        raise ValueError(f"Unknown category mapping to assign for account type '{type}'")
     
 
 class Account(entities.Entity):
@@ -105,6 +104,6 @@ class Account(entities.Entity):
     def apply_account_added_event(self, event: events.AccountAddedEvent):
         self.id = AccountId(event.account_id)
         self.name = AccountName(event.name)
-        self.category = AccountCategory.from_type(event._type)
-        self.type = AccountType(event._type)
+        self.category = AccountCategory.fromtype(event.type)
+        self.type = account_type(event.type)
         self.balance = AccountBalance(event.balance).clean()
