@@ -22,7 +22,6 @@ class CommandHandler(MessageHandler):
         pass
 
 
-
 class EventHandler(MessageHandler):
     
     @abc.abstractmethod

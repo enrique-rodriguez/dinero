@@ -1,6 +1,7 @@
-from accounts.core.application import commands, handlers
-from accounts.core.domain import events
 from shared import module
+from accounts.core.domain import events
+from accounts.core.application import commands
+from accounts.core.application import handlers
 
 
 class AccountModule(module.Module):
@@ -12,7 +13,7 @@ class AccountModule(module.Module):
         self.account_read_model = account_read_model
 
         # Commands
-        self.register_command(commands.AddAccountCommand, handlers.AddAccountHandler(account_repository, self))
+        self.register_command(commands.AddAccountCommand, handlers.AddAccountHandler(account_repository))
 
         # Events
         self.register_event(events.AccountUpdatedEvent, handlers.AccountUpdatedHandler(account_read_model))

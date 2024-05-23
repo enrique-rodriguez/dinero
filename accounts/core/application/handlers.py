@@ -1,19 +1,16 @@
-from shared import module
-from shared.core.application import result
-from shared.core.application import handlers
-
 from accounts.core import factories
 from accounts.core.domain import events
 from accounts.core.domain import models
 from accounts.core.domain import repository
 from accounts.core.application import commands
 
+from shared.core.application import handlers, result
+
 
 class AddAccountHandler(handlers.CommandHandler):
 
-    def __init__(self, account_repository: repository.AccountRepository, module: module.Module):
+    def __init__(self, account_repository: repository.AccountRepository):
         super().__init__()
-        self.module = module
         self.account_repository = account_repository
 
     def execute(self, cmd: commands.AddAccountCommand):
@@ -25,7 +22,7 @@ class AddAccountHandler(handlers.CommandHandler):
         res = result.Result.success()
         
         try:
-            account = factories.AccountFactory.create(cmd.id, cmd.name, cmd._type, cmd.balance)
+            account = factories.AccountFactory.create(cmd.id, cmd.name, cmd.type, cmd.balance)
             self.account_repository.save(cmd.id, account)
             evts = account.pop_events()
             evts.extend([events.AccountUpdatedEvent(

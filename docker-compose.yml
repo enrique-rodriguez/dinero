@@ -15,7 +15,6 @@ services:
       - rabbitmq_go_net
     depends_on:
       - rabbitmq
-
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: 'rabbitmq'
@@ -27,7 +26,6 @@ services:
         - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
         - rabbitmq_go_net
-  
   worker:
     build:
       context: .
@@ -42,22 +40,7 @@ services:
     networks:
       - rabbitmq_go_net
     depends_on:
-      - producer
       - rabbitmq
-  
-  producer:
-    build:
-      context: .
-      dockerfile: docker/producer.Dockerfile
-    container_name: producer
-    env_file:
-      - .env
-    networks:
-      - rabbitmq_go_net
-    depends_on:
-      - web
-      - rabbitmq
-
 networks:
   rabbitmq_go_net:
     driver: bridge

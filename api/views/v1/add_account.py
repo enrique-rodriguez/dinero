@@ -1,11 +1,12 @@
 import uuid
-from django.http import HttpResponse
-from django.views.generic import View
-from accounts import accounts
-from accounts.core.application import commands
+
 from django import urls
 from django.contrib import messages
+from django.http import HttpResponse
+from django.views.generic import View
 
+from accounts import accounts
+from accounts.core.application import commands
 
 
 class AddAccountEndpoint(View):

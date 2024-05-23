@@ -1,8 +1,5 @@
 from django.db import models
 
-# Create your models here.
-
-
 
 class AccountEventModel(models.Model):
     event_id = models.UUIDField(verbose_name="Event ID", unique=True)

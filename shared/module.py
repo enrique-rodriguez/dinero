@@ -1,6 +1,7 @@
 from shared.core.application import handlers
 from shared.core.application import messages
 
+
 class Module:
     def __init__(self):
         self.event_handlers = {}
@@ -10,15 +11,13 @@ class Module:
         if not self.is_command_registered(command.__class__):
             raise ValueError("Command not registered")
 
-        handler: handlers.MessageHandler = self.command_handlers.get(command.__class__)
+        handler: handlers.CommandHandler = self.command_handlers.get(command.__class__)
 
-        res = handler.execute(command)
+        result = handler.execute(command)
 
-        evts = handler.collect_events()
+        self.dispatch(handler.collect_events())
 
-        self.dispatch(evts)
-
-        return res
+        return result
     
     def dispatch(self, events):
         if not isinstance(events, list):
@@ -26,6 +25,8 @@ class Module:
         
         while len(events) > 0:
             e = events.pop(0)
+
+            handler: handlers.EventHandler = None
 
             for handler in self.event_handlers.get(e.__class__, []):
                 handler.dispatch(e)

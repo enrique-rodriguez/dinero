@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+
 from shared.core.application import messages
 
 
@@ -6,5 +7,5 @@ from shared.core.application import messages
 class AddAccountCommand(messages.Command):
     id: str
     name: str
-    _type: str
+    type: str
     balance: str
