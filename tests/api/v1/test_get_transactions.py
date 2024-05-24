@@ -16,4 +16,5 @@ class GetTransactionsApiEndpointTestCase(TestCase):
         response = self.get_transactions()
 
         self.assertEqual(response.status_code, 200)
+        self.assertIn('transactions', response.context)
     

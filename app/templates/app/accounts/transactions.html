@@ -1,6 +1,7 @@
 <table class="table m-0">
     <thead>
     <tr>
+      <th>Account</th>
       <th>Date</th>
       <th>Payee</th>
       <th>Category</th>
@@ -11,14 +12,17 @@
     </tr>
     </thead>
     <tbody>
+    {% for tr in transactions %}
     <tr>
-      <td>2024/06/20</td>
-      <td>Costco</td>
-      <td>Eating Out</td>
-      <td>Burger King</td>
-      <td>-$5.45</td>
-      <td></td>
-      <td><i class="fas fa-check-circle"></i></td>
+      <td>{{ tr.account }}</td>
+      <td>{{ tr.date|date:"Y/m/d" }}</td>
+      <td>{{ tr.payee }}</td>
+      <td>{{ tr.category }}</td>
+      <td>{{ tr.memo }}</td>
+      <td>{{ tr.outflow }}</td>
+      <td>{{ tr.inflow }}</td>
+      <td>{% if tr.cleared %}<i class="fas fa-check-circle"></i>{% endif %}</td>
     </tr>
+    {% endfor %}
     </tbody>
 </table>

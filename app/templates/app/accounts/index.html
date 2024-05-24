@@ -34,6 +34,9 @@
               <div class="card-body">
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
               </div>
+              <div class="card-footer clearfix">
+                <a data-toggle="modal" data-target="#modal-transaction" class="btn btn-sm btn-info float-left">Add Transaction</a>
+              </div>
             </div>
           </div>
         </div>
@@ -41,18 +44,6 @@
           <div class="col">
             <!-- TABLE: LATEST ORDERS -->
             <div class="card">
-              <div class="card-header border-transparent">
-                <h3 class="card-title">Latest Orders</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
                 <div class="table-responsive">
@@ -63,10 +54,6 @@
                 <!-- /.table-responsive -->
               </div>
               <!-- /.card-body -->
-              <div class="card-footer clearfix">
-                <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Add Transaction</a>
-              </div>
-              <!-- /.card-footer -->
             </div>
             <!-- /.card -->
           </div>
@@ -79,4 +66,9 @@
 </div>
 <!-- /.content-wrapper -->
 
+
+
+{% include 'app/accounts/add_transaction_modal.html' %}
+
 {% endblock content %}
+

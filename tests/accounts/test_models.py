@@ -48,6 +48,7 @@ class TestTransactionProjectModel(TestCase):
         self.assertEqual(models.TransactionProjectionModel._meta.verbose_name_plural, 'Transaction Projections')
 
         self.assertEqual(models.TransactionProjectionModel._meta.get_field('uuid').verbose_name, 'UUID')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('account_id').verbose_name, 'Account ID')
         self.assertEqual(models.TransactionProjectionModel._meta.get_field('date').verbose_name, 'Date')
         self.assertEqual(models.TransactionProjectionModel._meta.get_field('payee_id').verbose_name, 'Payee ID')
         self.assertEqual(models.TransactionProjectionModel._meta.get_field('category_id').verbose_name, 'Category ID')
@@ -58,6 +59,7 @@ class TestTransactionProjectModel(TestCase):
     
     def test_field_names(self):
         self.assertEqual(models.TransactionProjectionModel._meta.get_field('uuid').name, 'uuid')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('account_id').name, 'account_id')
         self.assertEqual(models.TransactionProjectionModel._meta.get_field('date').name, 'date')
         self.assertEqual(models.TransactionProjectionModel._meta.get_field('payee_id').name, 'payee_id')
         self.assertEqual(models.TransactionProjectionModel._meta.get_field('category_id').name, 'category_id')

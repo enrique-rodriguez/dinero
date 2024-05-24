@@ -27,6 +27,7 @@ class AccountProjectionModel(models.Model):
 
 class TransactionProjectionModel(models.Model):
     uuid = models.UUIDField(verbose_name="UUID", unique=True)
+    account_id = models.CharField(max_length=100, verbose_name="Account ID")
     date = models.DateField(verbose_name="Date")
     payee_id = models.CharField(max_length=100, verbose_name="Payee ID")
     category_id = models.CharField(max_length=100, verbose_name="Category ID")

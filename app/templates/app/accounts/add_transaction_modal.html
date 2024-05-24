@@ -1,0 +1,47 @@
+<div class="modal fade" id="modal-transaction">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add Transaction</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form hx-post="{% url 'api:add_account' %}">
+              {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="accountName">Give it a nickname</label>
+                    <input required type="text" class="form-control" id="accountName" name="account_name">
+                  </div>
+                  <div class="form-group">
+                    <label for="accountType">What type of account are you adding?</label>
+                    <select required class="custom-select rounded-0" id="accountType" name="account_type">
+                        <option selected disabled>Select account type...</option>
+                        <option disabled>--- Budget Accounts ---</option>
+                        <option value="checking">Checking</option>
+                        <option value="savings">Savings</option>
+                        <option value="cash">Cash</option>
+                        <option disabled>--- Tracking Accounts ---</option>
+                        <option value="asset">Asset (i.e. Investment)</option>
+                        <option value="liability">Liability</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="accountBalance">What is your current account balance?</label>
+                    <input required type="text" class="form-control" id="accountBalance" name="account_balance">
+                  </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary btn-block">Next</button>
+                </div>
+              </form>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
