@@ -1,109 +1,76 @@
-from dataclasses import dataclass
-
 from accounts.core.domain import events
-from shared.core.domain import entities, values
+from accounts.core.domain import values
+from accounts.core.application import commands
+from shared.core.domain import entities
 
 
-@dataclass(frozen=True)
-class AccountId(values.ValueObject):
-    id: str
+class Transaction(entities.Entity):
+    def __init__(self, id, date, payee_id, category_id, memo, *args, **kwargs):
+        super(*args, **kwargs)
+        self.id = id
+        self.date = date
+        self.payee_id = payee_id
+        self.category_id = category_id
+        self.memo = memo
 
-    def __post_init__(self):
-        if len(self.id) == 0:
-            raise ValueError("Account ID Empty")
+    def apply(self, event):
+        pass
 
-    def get(self):
-        return self.id
-
-
-@dataclass(frozen=True)
-class AccountBalance(values.ValueObject):
-    balance: str
-
-    def __post_init__(self):
-        if len(str(self.balance)) == 0:
-            raise ValueError("Account Balance Empty")
-    
-    def get(self):
-        return self.balance
-            
-    def clean(self):
-        new_balance = None
-
-        try:
-            new_balance = float(self.balance.strip())
-
-        except:
-            new_balance = float('0')
-        
-        return AccountBalance(int(new_balance * 100))
-        
-
-@dataclass(frozen=True)
-class account_type(values.ValueObject):
-    type: str
-
-    def __post_init__(self):
-        if len(self.type) == 0:
-            raise ValueError("Account Type Empty")
-    
-    def get(self):
-        return self.type
-        
-
-@dataclass(frozen=True)
-class AccountName(values.ValueObject):
-    name: str
-
-    def __post_init__(self):
-        if len(self.name) == 0:
-            raise ValueError("Account Name Empty")
-    
-    def get(self):
-        return self.name
-
-
-
-@dataclass(frozen=True)
-class AccountCategory(values.ValueObject):
-    category: str
-
-    def __post_init__(self):
-        if len(self.category) == 0:
-            raise ValueError("Account Category Empty")
-    
-    def get(self):
-        return self.category
-
-    @classmethod
-    def fromtype(self, type):
-        if type in ["checking", "savings", "cash"]:
-            return AccountCategory("budget")
-
-        elif type in ["asset", "liability"]:
-            return AccountCategory("tracking")
-        
-        raise ValueError(f"Unknown category mapping to assign for account type '{type}'")
-    
 
 class Account(entities.Entity):
 
     def __init__(self, events=None):
         super().__init__()
+        self.transactions = []
         
-        evts = events or list()
+        for e in (events or list()): self.apply(e)
+    
+    def add_transaction(self, cmd: commands.AddTransactionCommand):
+        payee_id = values.PayeeId(cmd.payee_id)
+        memo = values.TransactionMemo(cmd.memo)
+        category_id = values.CategoryId(cmd.category_id)
+        transaction_date = values.TransactionDate(cmd.date)
+        transaction_id = values.TransactionId(cmd.transaction_id)
 
-        for e in evts: self.apply(e)
+        if self.get_transaction(transaction_id):
+            raise ValueError(f"Transaction with id '{transaction_id.get()}' already exists.")
+        
+        self.add_event(events.TransactionAddedEvent(
+            transaction_id=transaction_id, 
+            account_id=self.id,
+            date=transaction_date,
+            payee_id=payee_id,
+            category_id=category_id,
+            memo=memo,
+        ))
+
+    def get_transaction(self, id):
+        for t in self.transactions:
+            if t.id == id:
+                return t
+        return None
     
     def apply(self, event):
         if isinstance(event, events.AccountAddedEvent):
             return self.apply_account_added_event(event)
         
+        if isinstance(event, events.TransactionAddedEvent):
+            return self.apply_transaction_added_event(event)
+        
         raise ValueError(f"Unknown event '{event.__class__.__name__}'")
 
     def apply_account_added_event(self, event: events.AccountAddedEvent):
-        self.id = AccountId(event.account_id)
-        self.name = AccountName(event.name)
-        self.category = AccountCategory.fromtype(event.type)
-        self.type = account_type(event.type)
-        self.balance = AccountBalance(event.balance).clean()
+        self.name = event.name
+        self.type = event.type
+        self.id = event.account_id
+        self.balance = event.balance
+        self.category = event.category
+
+    def apply_transaction_added_event(self, event: events.TransactionAddedEvent):
+        self.transactions.append(Transaction(
+            id=event.transaction_id,
+            date=event.date,
+            payee_id=event.payee_id,
+            category_id=event.category_id,
+            memo=event.memo,
+        ))

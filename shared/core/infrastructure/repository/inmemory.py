@@ -13,7 +13,11 @@ class InMemoryRepository(repository.Repository):
         return [self.build_event(e) for e in events]
 
     def save(self, id, entity):
-        self.events[id] = [event.to_dict() for event in entity.domain_events]
+        if id not in self.events:
+            self.events[id] = []
+        
+        # Save the new events for this entity
+        self.events[id].extend([event.to_dict() for event in entity.domain_events])
     
     @abc.abstractmethod
     def build_event(self, e):

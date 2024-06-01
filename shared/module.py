@@ -3,6 +3,7 @@ from shared.core.application import messages
 
 
 class Module:
+    
     def __init__(self):
         self.event_handlers = {}
         self.command_handlers = {}

@@ -14,6 +14,7 @@ class AccountModule(module.Module):
 
         # Commands
         self.register_command(commands.AddAccountCommand, handlers.AddAccountHandler(account_repository))
+        self.register_command(commands.AddTransactionCommand, handlers.AddTransactionHandler(account_repository))
 
         # Events
         self.register_event(events.AccountUpdatedEvent, handlers.AccountUpdatedHandler(account_read_model))

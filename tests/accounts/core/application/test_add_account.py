@@ -1,27 +1,15 @@
-import unittest
 import uuid
 
 from accounts.core.application import commands
-from tests.accounts.core import module
 
 
-class AddAccountTestCase(unittest.TestCase):
+from . import TestCase
 
-    def setUp(self):
-        self.module = module.get_module()
-    
-    def add_account(self, **kwargs):
-        account_id = kwargs.get("account_id", str(uuid.uuid4()))
-        account_name = kwargs.get("account_name", "My Account")
-        account_type = kwargs.get("account_type", "checking")
-        account_balance = kwargs.get("account_balance", "100.00")
 
-        cmd = commands.AddAccountCommand(account_id, account_name, account_type, account_balance)
+class AddAccountTestCase(TestCase):
 
-        return self.module.execute(cmd)
-    
     def test_add_account_command_handler_is_registered(self):
-        self.assertTrue(self.module.is_command_registered(commands.AddAccountCommand))
+        self.assertCommandRegistered(commands.AddAccountCommand)
 
     def test_account_id_exists_gives_error(self):
         account_id = str(uuid.uuid4())

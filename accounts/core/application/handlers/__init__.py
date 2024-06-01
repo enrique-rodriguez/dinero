@@ -1,2 +1,3 @@
 from .add_account import AddAccountHandler
 from .add_account import AccountUpdatedHandler
+from .add_transaction import AddTransactionHandler
