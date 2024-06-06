@@ -23,6 +23,19 @@ class PayeeId(values.ValueObject):
         return self.id
 
 
+
+@dataclass(frozen=True)
+class PayeeName(values.ValueObject):
+    name: str
+
+    def __post_init__(self):
+        if len(self.name) == 0:
+            raise ValueError("Payee Name Empty.")
+
+    def get(self):
+        return self.name
+
+
 @dataclass(frozen=True)
 class CategoryId(values.ValueObject):
     id: str

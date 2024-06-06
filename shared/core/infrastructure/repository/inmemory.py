@@ -1,8 +1,9 @@
 import abc
+
 from shared.core.domain import repository
 
 
-class InMemoryRepository(repository.Repository):
+class InMemoryEventsRepository(repository.Repository):
 
     def __init__(self):
         self.events = dict()
@@ -22,3 +23,20 @@ class InMemoryRepository(repository.Repository):
     @abc.abstractmethod
     def build_event(self, e):
         pass
+
+
+
+
+class InMemoryRepository(repository.Repository):
+
+    def __init__(self):
+        self.objects = dict()
+
+    def get(self, id):
+        return self.objects.get(id)
+
+    def save(self, id, entity):
+        self.objects[id] = entity
+        
+    def count(self):
+        return len(self.objects)

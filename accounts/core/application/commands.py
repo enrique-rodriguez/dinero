@@ -19,3 +19,9 @@ class AddTransactionCommand(messages.Command):
     payee_id: str
     category_id: str
     memo: str
+
+
+@dataclass(frozen=True)
+class AddPayeeCommand(messages.Command):
+    payee_id: str
+    payee_name: str
