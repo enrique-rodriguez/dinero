@@ -1,6 +1,7 @@
 import uuid
 
 from accounts.core.application import commands
+from accounts.core.domain.entities.account import Account
 
 
 from . import TestCase
@@ -59,3 +60,14 @@ class AddAccountTestCase(TestCase):
         self.add_account()
 
         self.assertEqual(self.module.account_read_model.count(), 1)
+    
+    def test_starting_balance_transaction_added(self):
+        account_id = str(uuid.uuid4())
+
+        self.add_account(account_id=account_id)
+
+        events = self.module.account_repository.get(account_id)
+
+        account = Account(events)
+
+        self.assertEqual(len(account.transactions), 1)

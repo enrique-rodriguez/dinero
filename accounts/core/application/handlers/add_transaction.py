@@ -1,4 +1,6 @@
 from accounts.core.domain import entities
+from accounts.core.domain import values
+from accounts.core.domain import events
 from accounts.core.domain import repository
 from accounts.core.application import commands
 from shared.core.application import result
@@ -28,3 +30,12 @@ class AddTransactionHandler(handlers.CommandHandler):
             res = result.Result.error(str(e), 'transaction-creation-error')
         
         return res
+    
+
+class AddTransactionProjectionHandler(handlers.EventHandler):
+    def __init__(self, transaction_read_model):
+        super().__init__()
+        self.transaction_read_model = transaction_read_model
+
+    def dispatch(self, event: events.TransactionAddedEvent):
+        print("TODO: Add transaction projection")

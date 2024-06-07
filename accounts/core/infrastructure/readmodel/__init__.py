@@ -1,2 +1,3 @@
 from .inmemory import InMemoryReadModel
 from .django import DjangoAccountReadModelStore
+from .django import DjangoTransactionsReadModelStore

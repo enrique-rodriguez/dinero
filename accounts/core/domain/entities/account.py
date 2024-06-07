@@ -51,13 +51,18 @@ class Account(entities.Entity):
         return None
     
     def apply(self, event):
+        apply_method = None
+
         if isinstance(event, events.AccountAddedEvent):
-            return self.apply_account_added_event(event)
+            apply_method = self.apply_account_added_event
         
-        if isinstance(event, events.TransactionAddedEvent):
-            return self.apply_transaction_added_event(event)
+        elif isinstance(event, events.TransactionAddedEvent):
+            apply_method = self.apply_transaction_added_event
         
-        raise ValueError(f"Unknown event '{event.__class__.__name__}'")
+        if not apply_method:
+            raise ValueError(f"Unknown event '{event.__class__.__name__}'")
+        
+        return apply_method(event)
 
     def apply_account_added_event(self, event: events.AccountAddedEvent):
         self.name = event.name

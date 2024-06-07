@@ -51,7 +51,7 @@ class AccountAddedEvent(events.DomainEvent):
             type=values.AccountType(obj.get('data').get('type')), 
             category=values.AccountCategory(obj.get('data').get('category')),
             balance=values.AccountBalance(obj.get('data').get('balance')),
-        )
+        ) 
 
 
 class TransactionAddedEvent(events.DomainEvent):

@@ -56,6 +56,7 @@ class TestTransactionProjectModel(TestCase):
         self.assertEqual(models.TransactionProjectionModel._meta.get_field('outflow').verbose_name, 'Outflow')
         self.assertEqual(models.TransactionProjectionModel._meta.get_field('inflow').verbose_name, 'Inflow')
         self.assertEqual(models.TransactionProjectionModel._meta.get_field('cleared').verbose_name, 'Cleared')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('reconciled').verbose_name, 'Reconciled')
     
     def test_field_names(self):
         self.assertEqual(models.TransactionProjectionModel._meta.get_field('uuid').name, 'uuid')
@@ -67,6 +68,7 @@ class TestTransactionProjectModel(TestCase):
         self.assertEqual(models.TransactionProjectionModel._meta.get_field('outflow').name, 'outflow')
         self.assertEqual(models.TransactionProjectionModel._meta.get_field('inflow').name, 'inflow')
         self.assertEqual(models.TransactionProjectionModel._meta.get_field('cleared').name, 'cleared')
+        self.assertEqual(models.TransactionProjectionModel._meta.get_field('reconciled').name, 'reconciled')
     
 
 

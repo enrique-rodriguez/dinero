@@ -8,3 +8,8 @@ class AccountReadModel:
         self.category = category
         self.type = type
         self.balance = balance
+
+
+
+class TransactionReadModel:
+    pass

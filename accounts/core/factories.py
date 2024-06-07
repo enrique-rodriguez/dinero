@@ -29,10 +29,15 @@ class EventFactory:
 
     @classmethod
     def create(cls, event_name, obj):
+        event_class = None
+
         if event_name == events.AccountAddedEvent.__name__:
-            return events.AccountAddedEvent.from_dict(obj)
+            event_class = events.AccountAddedEvent
         
         if event_name == events.TransactionAddedEvent.__name__:
-            return events.TransactionAddedEvent.from_dict(obj)
+            event_class = events.TransactionAddedEvent
 
-        raise ValueError(f"Could not map event '{event_name}'")
+        if not event_class:
+            raise ValueError(f"Could not map event '{event_name}'")
+
+        return event_class.from_dict(obj)

@@ -3,7 +3,7 @@ from django.db import models
 
 class AccountEventModel(models.Model):
     event_id = models.UUIDField(verbose_name="Event ID", unique=True)
-    account_id = models.UUIDField(verbose_name="Account ID", unique=True)
+    account_id = models.UUIDField(verbose_name="Account ID")
     created_at = models.DateTimeField(verbose_name="Creation Datetime")
     event_name = models.CharField(max_length=100, verbose_name="Event Name")
     data = models.JSONField(verbose_name="Event Data")
@@ -35,6 +35,7 @@ class TransactionProjectionModel(models.Model):
     outflow = models.IntegerField(verbose_name="Outflow")
     inflow = models.IntegerField(verbose_name="Inflow")
     cleared = models.BooleanField(verbose_name="Cleared")
+    reconciled = models.BooleanField(verbose_name="Reconciled")
 
     class Meta:
         verbose_name = "Transaction Projection"

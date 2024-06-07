@@ -46,3 +46,11 @@ class DjangoAccountReadModelStore(readmodel.ReadModelStore):
             model = None
         
         return model
+    
+
+class DjangoTransactionsReadModelStore(readmodel.ReadModelStore):
+    def get(self, id):
+        pass
+    
+    def save(self, id, model):
+        pass
